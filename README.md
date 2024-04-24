@@ -51,6 +51,7 @@ if __name__ == '__main__':
 ![LinearRegression](./img/img2.png)
 
 2. 岭回归
+
 相对于普通最小二乘法， 可以防止过拟合，更健康
 ```python
 import numpy as np
@@ -75,6 +76,7 @@ if __name__ == '__main__':
 ```
 ![LinearRegression](./img/img3.png)
 3. Lasso
+
 如果需要进行特征选择，Lasso可能是一个更好的选择
 ```python
 import numpy as np
@@ -97,7 +99,8 @@ if __name__ == '__main__':
 ```
 ![lasso](./img/img4.png)
 4. 贝叶斯岭回归
-贝叶斯岭回归对病态问题（ill-posed）的鲁棒性要更好
+
+    贝叶斯岭回归对病态问题（ill-posed）的鲁棒性要更好
 ```python
 import numpy as np
 from sklearn import linear_model
