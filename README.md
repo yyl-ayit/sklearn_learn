@@ -46,5 +46,5 @@ fig = go.Figure(data=[
 # 显示图表
 fig.show()
 ```
-<iframe src="./html/linear_regression_chart.html" width="600" height="400"></iframe>
+![LinearRegression](./img/img2.png)
 

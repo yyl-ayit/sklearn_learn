@@ -1,7 +1,8 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import plotly.graph_objects as go
-
+import plotly.io as pio
+import plotly
 # 创建线性回归模型
 reg = LinearRegression()
 
@@ -24,4 +25,9 @@ fig = go.Figure(data=[
     go.Scatter(x=x, y=data_y, mode='markers', name='原点')
 ])
 
-fig.write_html('./html/linear_regression_chart.html')
+# fig.write_html("gdp_per_capita.html")
+# 导出图表为图像
+fig.write_html("output.html", full_html=False, include_plotlyjs='cdn')
+# path = './img/linear_regression_chart.png'
+# pio.write_image(fig, path, scale=5, width=800, height=800)
+# pio.write_image(fig, path, format='png', scale=2)
