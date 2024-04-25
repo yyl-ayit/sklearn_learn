@@ -122,3 +122,100 @@ if __name__ == '__main__':
     fig.show()
 ```
 ![lasso](./img/img5.png)
+
+- 线性和二次判别分析（分类模型）
+
+这里， 举个例子
+```python
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+from sklearn.metrics import classification_report
+
+if __name__ == '__main__':
+    iris = datasets.load_iris()
+    x = iris.data
+    y = iris.target
+    train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3, random_state=42)  # 控制随机过程的随机性
+    # LDA
+    ida = LinearDiscriminantAnalysis()
+    ida.fit(train_x, train_y)
+    y_pred_lda = ida.predict(test_x)
+
+    # QDA
+
+    qda = QuadraticDiscriminantAnalysis()
+    qda.fit(train_x, train_y)
+    y_pred_qda = qda.predict(test_x)
+
+    # 打印LDA模型的分类报告
+    print("LDA Classification Report:")
+    print(classification_report(test_y, y_pred_lda, target_names=iris.target_names))
+
+    # 打印QDA模型的分类报告
+    print("\nQDA Classification Report:")
+    print(classification_report(test_y, y_pred_qda, target_names=iris.target_names))
+```
+结果：
+![线性和二次判别分析](./img/img6.png)
+发现，可能是数据太过于简单， 结果一样
+
+- 内核岭回归（线性回归）
+对于非线性回归问题非常有效
+```python
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import make_regression
+
+# 生成一个回归数据集
+X, y = make_regression(n_samples=100, n_features=1, noise=10, random_state=0)
+
+# 创建内核岭回归模型
+kr = KernelRidge(kernel='rbf', gamma=0.1)
+
+# 使用网格搜索来寻找最佳的超参数组合
+param_grid = {'alpha': [1e0, 1e-1, 1e-2, 1e-3],
+              'gamma': [0.1, 0.01, 0.001, 0.0001]}
+kr_grid = GridSearchCV(kr, param_grid=param_grid, cv=5)
+kr_grid.fit(X, y)
+
+# 输出最佳参数和得分
+print("Best parameters: ", kr_grid.best_params_)
+print("Best score: ", kr_grid.best_score_)
+```
+运行结果：
+![内核岭回归](./img/img7.png)
+
+下面用它来做一个正太拟合和预测
+```python
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import make_regression
+from sklearn.model_selection import train_test_split
+import plotly.graph_objects as go
+if __name__ == '__main__':
+    # 生成一个回归数据集
+    data_x, data_y = make_regression(n_samples=1000, n_features=1, noise=10, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.3, random_state=42)
+    kr = KernelRidge(kernel='rbf', gamma=0.1)
+
+    # 使用网格搜索来寻找最佳的超参数组合
+    param_grid = {'alpha': [1e0, 1e-1, 1e-2, 1e-3],
+                  'gamma': [0.1, 0.01, 0.001, 0.0001]}
+
+    kr_grid = GridSearchCV(kr, param_grid=param_grid, cv=5)
+    kr_grid.fit(X_train, y_train)
+    print("Best parameters: ", kr_grid.best_params_)
+    print("Best score: ", kr_grid.best_score_)
+    y_pred = kr_grid.predict(data_x)
+    data_x = [sum(i) for i in data_x]
+    fig = go.Figure(data=[
+        go.Scatter(x=data_x, y=data_y, mode='markers', name='原始点集'),
+        go.Scatter(x=data_x, y=y_pred, mode='lines', name='预测')
+    ])
+    fig.show()
+```
+运行结果：
+![内核岭回归](./img/img8.png)
+
+可以看出，效果确实不错。
