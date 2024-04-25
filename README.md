@@ -219,3 +219,34 @@ if __name__ == '__main__':
 ![内核岭回归](./img/img8.png)
 
 可以看出，效果确实不错。
+
+## 支持向量机(分类模型)
+
+就对自带的水仙花分类而言（0.9777777777777777），效果没线性和二次判别分析（1.0）好,广泛应用于模式识别、图像分类、文本分类等领域
+```python
+
+from sklearn import datasets
+from sklearn.svm import SVC
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, accuracy_score
+import plotly.graph_objects as go
+if __name__ == '__main__':
+    iris = datasets.load_iris()
+    x, y = iris.data, iris.target
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+
+    scaler = StandardScaler()
+    x_train = scaler.fit_transform(X_train)
+    x_test = scaler.transform(X_test)
+
+    clf = SVC(kernel='linear')
+    clf.fit(x_train, y_train)
+
+    y_pred = clf.predict(x_test)
+
+    print(classification_report(y_test, y_pred))
+    print(accuracy_score(y_test, y_pred))
+```
+运行结果：
+![支持向量机](./img/img9.png)
