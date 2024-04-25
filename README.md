@@ -1,5 +1,5 @@
 # 监督学习
-- 广义线性模型
+## 广义线性模型
 
 1. LinearRegression
 
@@ -123,7 +123,7 @@ if __name__ == '__main__':
 ```
 ![lasso](./img/img5.png)
 
-- 线性和二次判别分析（分类模型）
+## 线性和二次判别分析（分类模型）
 
 这里， 举个例子
 ```python
@@ -160,7 +160,7 @@ if __name__ == '__main__':
 ![线性和二次判别分析](./img/img6.png)
 发现，可能是数据太过于简单， 结果一样
 
-- 内核岭回归（线性回归）
+## 内核岭回归（线性回归）
 对于非线性回归问题非常有效
 ```python
 from sklearn.kernel_ridge import KernelRidge
