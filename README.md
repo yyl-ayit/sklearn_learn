@@ -230,7 +230,6 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
-import plotly.graph_objects as go
 if __name__ == '__main__':
     iris = datasets.load_iris()
     x, y = iris.data, iris.target
